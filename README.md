@@ -73,3 +73,81 @@ Dự án sử dụng [EAS Build](https://docs.expo.dev/build/introduction/) vớ
 ```bash
 eas build --profile preview --platform android
 ```
+
+---
+
+# Mobile Wearable Device (English)
+
+A mobile app (Expo / React Native) for patients, connected to a wearable device to monitor health in real time: heart rate, blood oxygen saturation (SpO2), body temperature, ambient temperature, and air quality. The app also supports booking appointments with doctors and managing a personal account.
+
+## Key Features
+
+- **Login** with phone number/password, session token stored locally.
+- **Dashboard**: displays real-time health data streamed from the wearable device over MQTT, with alerts and suggestions when abnormal readings are detected (heart rate, SpO2, temperature, motion, cough detection...).
+- **Appointments**: view, book, and cancel doctor appointments, check available time slots.
+- **Account**: view/update personal information and health data.
+
+## Tech Stack
+
+- [Expo](https://expo.dev) (SDK 51) + React Native 0.74
+- React Navigation (bottom tabs + stack)
+- MQTT (`paho-mqtt`) for real-time data from the wearable device
+- REST API (via `fetch`) for backend communication
+- AsyncStorage for local token storage
+
+## Project Structure
+
+```
+├── App.js                     # App entry point
+├── app.json / eas.json        # Expo and EAS Build configuration
+├── assets/                    # Images, fonts
+├── configs/                   # API config, shared variables
+├── containers/
+│   ├── authentication/        # Login screen
+│   ├── main/                  # Dashboard, appointments, account
+│   └── splash/                # Splash screen
+├── navigation/                 # Navigation setup (tab/stack)
+├── services/                   # API calls, MQTT, local storage...
+└── styles/                     # Shared styles
+```
+
+## Requirements
+
+- Node.js (>= 18 recommended)
+- npm
+- [Expo CLI](https://docs.expo.dev/get-started/installation/) (run via `npx`)
+- A simulator/emulator or physical device to run iOS/Android (Expo Go or dev client)
+
+## Installation
+
+```bash
+npm install
+```
+
+## Running the App
+
+```bash
+# Start the Metro bundler / Expo Dev Tools
+npm start
+
+# Run on Android
+npm run android
+
+# Run on iOS
+npm run ios
+
+# Run on web
+npm run web
+```
+
+## Configuration
+
+The backend API base URL and MQTT settings are declared in [configs/api_configs.js](configs/api_configs.js) and [services/mqtt_services.js](services/mqtt_services.js). Update these values for your deployment environment (credentials/connection info should be moved to environment variables instead of being hard-coded before shipping to production).
+
+## Build
+
+The project uses [EAS Build](https://docs.expo.dev/build/introduction/) with profiles declared in `eas.json` (`development`, `preview`, `production`).
+
+```bash
+eas build --profile preview --platform android
+```
